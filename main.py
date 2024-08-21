@@ -65,17 +65,20 @@ def write_qleverfile(config, file_path):
     """
     Write the Qleverfile configuration to a file.
     """
+    os.makedirs(os.path.dirname(file_path), exist_ok=True)
     with open(file_path, "w") as configfile:
         config.write(configfile)
 
 
-def run_command(command: str, show_output: Optional[bool] = False):
+def run_command(
+    command: str, show_output: Optional[bool] = False, cwd: Optional[str] = None
+):
     """
     Run the command in the shell and show the output if show_output is True.
     """
     try:
         result = subprocess.run(
-            command.split(), check=True, capture_output=True, text=True
+            command.split(), check=True, capture_output=True, text=True, cwd=cwd
         )
 
         if show_output:
@@ -101,7 +104,8 @@ def main():
     )
     args = parser.parse_args()
 
-    qleverfile_path = "Qleverfile"
+    index_dir = "index"
+    qleverfile_path = os.path.join(index_dir, "Qleverfile")
 
     if args.endpoint:
         print("### New endpoint provided:", args.endpoint, "\n")
@@ -112,15 +116,15 @@ def main():
         print("### Qleverfile is generated.\n")
 
         # run the command to get data
-        run_command("qlever get-data", show_output=True)
+        run_command("qlever get-data", show_output=True, cwd=index_dir)
         print("### Data is downloaded.\n")
 
         # run the command to index data
-        run_command("qlever index", show_output=True)
+        run_command("qlever index", show_output=True, cwd=index_dir)
         print("### Index build is completed.\n")
 
         # run the command to start qlever
-        run_command("qlever start", show_output=True)
+        run_command("qlever start", show_output=True, cwd=index_dir)
         print(f"### Index server is ready. Go to localhost:{args.port}.\n")
     else:
         print("No endpoint provided.\n")
