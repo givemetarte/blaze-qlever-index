@@ -7,6 +7,11 @@
 - `--name`: index 서버의 이름 입력
 
 ```bash
+# 가상환경 설정
+python -m venv env
+source env/bin/activate
+pip install -r requirements.txt
+# 코드 실행
 python main.py --endpoint=http://165.194.115.79:9999/blazegraph/namespace/test/sparql --port=7080 --name=hike
 ```
 
