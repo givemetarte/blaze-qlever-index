@@ -1,0 +1,28 @@
+# Qleverfile for hike, use with https://github.com/ad-freiburg/qlever-control
+#
+# qlever index
+# qlever start
+
+[data]
+NAME         = hike
+GET_DATA_CMD = curl -X POST http://165.194.115.79:9999/blazegraph/namespace/address/sparql --data-urlencode 'query=CONSTRUCT  WHERE { hint:Query hint:analytic "true" . hint:Query hint:constructDistinctSPO "false" . ?s ?p ?o }' -H 'Accept:application/x-turtle' | gzip > ${NAME}_data.ttl.gz
+DESCRIPTION  = TTL data from ${NAME} blazegraph
+
+[index]
+INPUT_FILES     = *.ttl.gz
+CAT_INPUT_FILES = zcat ${INPUT_FILES}
+SETTINGS_JSON   = {"locale": { "language": "ko", "country": "KR", "ignore-punctuation": true }, "ascii-prefixes-only": true, "num-triples-per-batch": 500000 }
+STXXL_MEMORY    = 10G
+
+[server]
+PORT               = 7001
+ACCESS_TOKEN       = ${data:NAME}
+MEMORY_FOR_QUERIES = 10G
+CACHE_MAX_SIZE     = 6G
+
+[runtime]
+SYSTEM = docker
+IMAGE  = docker.io/adfreiburg/qlever:latest
+
+[ui]
+UI_CONFIG = hike
