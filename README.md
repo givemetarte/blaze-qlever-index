@@ -2,7 +2,8 @@
 
 ### How to run
 
-- NOTE: Run blazegraph before running the codes && Run docker server!
+- NOTE1: Run blazegraph before running the codes & Run docker server!
+- NOTE2: Only working in Linux/MacOS (NOT WINDOWS, [check for windows](https://github.com/ad-freiburg/qlever-control/issues/45))
 
 - `--endpoint`: blazegraph SPARQL endpoint
 - `--port`: port number for qlever server (default: 7000)
