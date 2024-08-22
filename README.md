@@ -1,24 +1,26 @@
-# Blazegraph 데이터로 qlever index 생성하기
+# Qlever index from Blazegraph data
 
-### 실행방법
+### How to run
 
-- `--endpoint`: blazegraph의 SPARQL endpoint 입력
-- `--port`: index 서버를 실행할 포트 입력
-- `--name`: index 서버의 이름 입력
+- NOTE: Run blazegraph before running the codes
+
+- `--endpoint`: blazegraph SPARQL endpoint
+- `--port`: port number for qlever server (default: 7000)
+- `--name`: qlever server name (default: random 6 digits)
 
 ```bash
-# 가상환경 설정
+# env
 python -m venv env
 source env/bin/activate
 pip install -r requirements.txt
-# 코드 실행
-python main.py --endpoint=http://165.194.115.79:9999/blazegraph/namespace/test/sparql --port=7080 --name=hike
+# run main.py
+python main.py --endpoint=http://localhost:9999/blazegraph/namespace/test/sparql --port=7080 --name=test
 ```
 
-### SPARQL 질의
+### SPARQL query
 
-- index 서버가 무사히 실행된 후 터미널에서 아래 코드 실행
-- {port}는 본인이 입력한 포트로 수정
+- NOTE: Check qlever server is open
+- {port}: replace the port number
 
 ```bash
 curl -s http://localhost:{port} \
@@ -27,7 +29,7 @@ curl -s http://localhost:{port} \
   --data "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> SELECT ?label WHERE { ?s rdfs:label ?label . } LIMIT 10"
 ```
 
-### qlever 실행
+### run qlever (command line)
 
 ```bash
 qlever get-data
