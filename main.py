@@ -1,4 +1,5 @@
 import os
+import sys
 import random
 import string
 import subprocess
@@ -84,8 +85,13 @@ def run_command(
         if show_output:
             print(result.stdout)
             # print(result.stderr)
+
+        return True  # Command succeeded
+
     except subprocess.CalledProcessError as e:
         print("Error occurred while executing command:", e)
+
+        return False  # Command failed
 
 
 def main():
@@ -103,6 +109,14 @@ def main():
         "--port", type=int, default=7000, help="The port number for the index server."
     )
     args = parser.parse_args()
+
+    if run_command("docker info"):
+        print("### Docker is running.\n")
+    else:
+        print(
+            "### It looks like Docker is not running. Please start Docker and try again."
+        )
+        sys.exit(1)
 
     index_dir = "index"
     qleverfile_path = os.path.join(index_dir, "Qleverfile")
@@ -127,7 +141,7 @@ def main():
         run_command("qlever start", show_output=True, cwd=index_dir)
         print(f"### Index server is ready. Go to localhost:{args.port}.\n")
     else:
-        print("No endpoint provided.\n")
+        print("### No endpoint provided.\n")
 
 
 if __name__ == "__main__":

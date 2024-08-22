@@ -2,7 +2,7 @@
 
 ### How to run
 
-- NOTE: Run blazegraph before running the codes
+- NOTE: Run blazegraph before running the codes && Run docker server!
 
 - `--endpoint`: blazegraph SPARQL endpoint
 - `--port`: port number for qlever server (default: 7000)
