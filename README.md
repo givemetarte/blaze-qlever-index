@@ -10,8 +10,6 @@
 - `--name`: qlever server name (default: random 6 digits)
 
 ```bash
-- Currently the following media types are supported: application/sparql-results+json, application/sparql-results+xml, application/qlever-results+json, text/tab-separated-values, text/csv, text/turtle, application/octet-stream
-
 # env
 python -m venv env
 source env/bin/activate
@@ -24,6 +22,7 @@ python main.py --endpoint=http://localhost:9999/blazegraph/namespace/test/sparql
 
 - NOTE: Check qlever server is open
 - {port}: replace the port number
+- Currently the following media types are supported: application/sparql-results+json, application/sparql-results+xml, application/qlever-results+json, text/tab-separated-values, text/csv, text/turtle, application/octet-stream
 
 ```bash
 curl -s http://localhost:{port} \
